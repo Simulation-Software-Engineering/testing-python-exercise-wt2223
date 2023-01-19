@@ -129,6 +129,74 @@ Ran 3 tests in 0.001s
 FAILED (failures=3)
 ```
 
+### Integration test log
+
+```
+pytest tests/integration 
+============================================================ test session starts ============================================================
+platform linux -- Python 3.10.9, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/jo/Uni/SSE-Labs/07-testing/testing-python-exercise-wt2223, configfile: pytest.ini
+collected 2 items                                                                                                                           
+
+tests/integration/test_diffusion2d.py .F                                                                                              [100%]
+
+================================================================= FAILURES ==================================================================
+________________________________________________________ test_set_initial_condition _________________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=7.5, h=7.5, dx=1.25, dy=1.5)
+        solver.initialize_physical_parameters(d=3.0, T_cold=200.0, T_hot=600.0)
+    
+        expected = 200.0 * np.ones((6, 5))
+        for i in range(3, 6):
+            for j in range(3, 5):
+                expected[i][j] = 600.0
+    
+        result = solver.set_initial_condition()
+    
+>       assert np.isclose(result, expected).all()
+
+tests/integration/test_diffusion2d.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<__array_function__ internals>:200: in isclose
+    ???
+venv/lib/python3.10/site-packages/numpy/core/numeric.py:2380: in isclose
+    return within_tol(x, y, atol, rtol)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+x = array([[200., 200., 200., 200., 200.],
+       [200., 200., 200., 200., 200.],
+       [200., 200., 200., 200., 200.],
+ ...,
+       [200., 200., 200., 200., 200.],
+       [200., 200., 200., 200., 200.],
+       [200., 200., 200., 200., 200.]])
+y = array([[200., 200., 200., 200., 200.],
+       [200., 200., 200., 200., 200.],
+       [200., 200., 200., 200., 200.],
+       [200., 200., 200., 600., 600.],
+       [200., 200., 200., 600., 600.],
+       [200., 200., 200., 600., 600.]])
+atol = 1e-08, rtol = 1e-05
+
+    def within_tol(x, y, atol, rtol):
+        with errstate(invalid='ignore'), _no_nep50_warning():
+>           return less_equal(abs(x-y), atol + rtol * abs(y))
+E           ValueError: operands could not be broadcast together with shapes (12,5) (6,5)
+
+venv/lib/python3.10/site-packages/numpy/core/numeric.py:2361: ValueError
+----------------------------------------------------------- Captured stdout call ------------------------------------------------------------
+dt = 0.15368852459016394
+========================================================== short test summary info ==========================================================
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - ValueError: operands could not be broadcast together with shapes (12,5) (6,5)
+======================================================== 1 failed, 1 passed in 0.51s ========================================================
+
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
