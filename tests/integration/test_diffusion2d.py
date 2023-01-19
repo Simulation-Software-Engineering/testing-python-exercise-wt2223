@@ -2,7 +2,7 @@
 Tests for functionality checks in class SolveDiffusion2D
 """
 
-from diffusion2d import SolveDiffusion2D
+from ...diffusion2d import SolveDiffusion2D
 
 
 def test_initialize_physical_parameters():
