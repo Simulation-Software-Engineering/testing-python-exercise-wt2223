@@ -10,14 +10,14 @@ def test_initialize_domain():
     Check function SolveDiffusion2D.initialize_domain
     """
     solver = SolveDiffusion2D()
-    solver.initialize_domain(w=5., h=5., dx=0.2, dy=0.2)
+    solver.initialize_domain(w=5., h=4., dx=0.2, dy=0.2)
 
     assert solver.w == 5.
-    assert solver.h == 5.
+    assert solver.h == 4.
     assert solver.dx == 0.2
     assert solver.dy == 0.2
     assert solver.nx == 25
-    assert solver.ny == 25
+    assert solver.ny == 20
     
 
 
