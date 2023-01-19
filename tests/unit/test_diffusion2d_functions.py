@@ -50,8 +50,8 @@ def test_set_initial_condition():
     solver = SolveDiffusion2D()
     solver.w = 10.
     solver.h = 10.
-    solver.dx = .1
-    solver.dy = .1
+    solver.dx = 10.
+    solver.dy = 10.
     solver.nx = int(solver.w / solver.dx)
     solver.ny = int(solver.h / solver.dy)
 
@@ -60,4 +60,5 @@ def test_set_initial_condition():
     solver.T_hot = 700.
 
     res = solver.set_initial_condition()
-    print(res)
+    _res = np.full((1, 1), 300.)
+    assert (res == _res).all()
