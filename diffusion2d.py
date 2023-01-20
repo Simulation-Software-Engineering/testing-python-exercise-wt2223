@@ -38,35 +38,36 @@ class SolveDiffusion2D:
         self.dt = None
 
     def initialize_domain(self, w=10., h=10., dx=0.1, dy=0.1):
-        self.w = w
-        self.h = h
-        self.dx = dx
-        self.dy = dy
-        self.nx = int(w / dx)
-        self.ny = int(h / dy)
-        
         assert type(w) == float
         assert type(h) == float
         assert type(dx) == float
         assert type(dy) == float
-            
+        
+        self.w = w
+        self.h = h
+        self.dx = dx
+        self.dy = dy
+        self.nx = int(w / dx)+1
+        self.ny = int(h / dy)
+        
+                  
     def initialize_physical_parameters(self, d=4., T_cold=300., T_hot=700.):
+        assert type(d) == float
+        assert type(T_cold) == float
+        assert type(T_hot) == float
+        
         self.D = d
         self.T_cold = T_cold
         self.T_hot = T_hot
         
-        assert type(d) == float
-        assert type(T_cold) == float
-        assert type(T_hot) == float
-
         # Computing a stable time step
         dx2, dy2 = self.dx * self.dx, self.dy * self.dy
-        self.dt = dx2 * dy2 / (2 * self.D * (dx2 + dy2))
+        self.dt = dx2 * dy2 / (2 * self.D * (dx2 + dy2)) - 0.05
 
         print("dt = {}".format(self.dt))
 
     def set_initial_condition(self):
-        u = self.T_cold * np.ones((self.nx, self.ny))
+        u = (self.T_cold+50) * np.ones((self.nx, self.ny))
 
         # Initial conditions - circle of radius r centred at (cx,cy) (mm)
         r, cx, cy = 2, 5, 5
@@ -76,7 +77,6 @@ class SolveDiffusion2D:
                 p2 = (i * self.dx - cx) ** 2 + (j * self.dy - cy) ** 2
                 if p2 < r2:
                     u[i, j] = self.T_hot
-        print(u)
         return u.copy()
 
     def do_timestep(self, u_nm1):
