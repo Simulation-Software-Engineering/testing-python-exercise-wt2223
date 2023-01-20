@@ -647,6 +647,186 @@ E                  [400., 400., 400., ..., 400., 400., 400.],...
 Process finished with exit code 1
 ```
 
+### Integration test log
+
+#### Only break test_set_initial_conditions
+
+```
+/home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/integration/test_diffusion2d.py
+Testing started at 13:42 ...
+Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/integration/test_diffusion2d.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/integration
+
+============================= test session starts ==============================
+collecting ... collected 2 items
+
+test_diffusion2d.py::test_initialize_physical_parameters PASSED          [ 50%]dt = 0.005000000000000001
+
+test_diffusion2d.py::test_set_initial_condition FAILED                   [100%]dt = 0.005000000000000001
+
+test_diffusion2d.py:26 (test_set_initial_condition)
+array([[800., 800., 800., ..., 400., 400., 400.],
+       [800., 800., 800., ..., 400., 400., 400.],
+       [800., 800., 800., ..., 400., 400., 400.],
+       ...,
+       [800., 800., 800., ..., 400., 400., 400.],
+       [800., 800., 800., ..., 400., 400., 400.],
+       [800., 800., 800., ..., 400., 400., 400.]]) != array([[400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       ...,
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.]])
+
+<Click to see difference>
+
+solver = <diffusion2d.SolveDiffusion2D object at 0x7feb603ae250>
+
+    def test_set_initial_condition(solver):
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver.initialize_domain(12., 18., 0.4, 0.4)
+        solver.initialize_physical_parameters(8., 400., 800.)
+        actual = solver.set_initial_condition()
+        idx = np.array([8,  8,  8,  8,  9,  9,  9,  9,  9,  9,  9,  9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11,
+                        11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+                        14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16,
+                        16, 17, 17, 17, 17])
+        idy = np.array([11, 12, 13, 14,  9, 10, 11, 12, 13, 14, 15, 16,  9, 10, 11, 12, 13, 14, 15, 16,  8,  9, 10, 11, 12,
+                        13, 14, 15, 16, 17,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+                        8, 9, 10, 11, 12, 13, 14, 15, 16, 17,  9, 10, 11, 12, 13, 14, 15, 16, 9, 10, 11, 12, 13, 14, 15, 16,
+                        11, 12, 13, 14])
+        expected = np.ones((30, 45))
+        expected[:, :] = 400.
+        expected[idx, idy] = 800.
+>       assert (actual == expected).all()
+E       assert False
+E        +  where False = <built-in method all of numpy.ndarray object at 0x7feb60533270>()
+E        +    where <built-in method all of numpy.ndarray object at 0x7feb60533270> = array([[800., 800., 800., ..., 400., 400., 400.],\n       [800., 800., 800., ..., 400., 400., 400.],\n       [800., 800., 800., ..., 400., 400., 400.],\n       ...,\n       [800., 800., 800., ..., 400., 400., 400.],\n       [800., 800., 800., ..., 400., 400., 400.],\n       [800., 800., 800., ..., 400., 400., 400.]]) == array([[400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       ...,\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.]])
+E             Full diff:
+E             - array([[400., 400., 400., ..., 400., 400., 400.],
+E             -        [400., 400., 400., ..., 400., 400., 400.],
+E             -        [400., 400., 400., ..., 400., 400., 400.],
+E             + array([[800., 800., 800., ..., 400., 400., 400.],
+E             +        [800., 800., 800., ..., 400., 400., 400.],
+E             +        [800., 800., 800., ..., 400., 400., 400.],
+E                      ...,
+E             -        [400., 400., 400., ..., 400., 400., 400.],
+E             -        [400., 400., 400., ..., 400., 400., 400.],
+E             -        [400., 400., 400., ..., 400., 400., 400.]],
+E             +        [800., 800., 800., ..., 400., 400., 400.],
+E             +        [800., 800., 800., ..., 400., 400., 400.],
+E             +        [800., 800., 800., ..., 400., 400., 400.]],
+E               ).all
+
+test_diffusion2d.py:45: AssertionError
+
+
+========================= 1 failed, 1 passed in 0.15s ==========================
+
+Process finished with exit code 1
+```
+
+#### Break all tests
+
+```
+/home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/integration/test_diffusion2d.py 
+Testing started at 13:45 ...
+Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/integration/test_diffusion2d.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/integration
+
+============================= test session starts ==============================
+collecting ... collected 2 items
+
+test_diffusion2d.py::test_initialize_physical_parameters FAILED          [ 50%]dt = 0.0013793103448275868
+
+test_diffusion2d.py:14 (test_initialize_physical_parameters)
+0.0013793103448275868 != 0.005 ± 5.0e-09
+
+Expected :0.005 ± 5.0e-09
+Actual   :0.0013793103448275868
+<Click to see difference>
+
+solver = <diffusion2d.SolveDiffusion2D object at 0x7feb7cf3df10>
+
+    def test_initialize_physical_parameters(solver):
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver.initialize_domain(12., 18., 0.4, 0.4)
+        solver.initialize_physical_parameters(8., 400., 800.)
+    
+        actual = solver.dt
+        expected = 0.005
+>       assert actual == pytest.approx(expected, rel=0.000001)
+E       assert 0.0013793103448275868 == 0.005 ± 5.0e-09
+E         comparison failed
+E         Obtained: 0.0013793103448275868
+E         Expected: 0.005 ± 5.0e-09
+
+test_diffusion2d.py:24: AssertionError
+
+test_diffusion2d.py::test_set_initial_condition FAILED                   [100%]dt = 0.0013793103448275868
+
+test_diffusion2d.py:26 (test_set_initial_condition)
+array([[400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       ...,
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.]]) != array([[400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       ...,
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.],
+       [400., 400., 400., ..., 400., 400., 400.]])
+
+<Click to see difference>
+
+solver = <diffusion2d.SolveDiffusion2D object at 0x7feb7d030210>
+
+    def test_set_initial_condition(solver):
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver.initialize_domain(12., 18., 0.4, 0.4)
+        solver.initialize_physical_parameters(8., 400., 800.)
+        actual = solver.set_initial_condition()
+        idx = np.array([8,  8,  8,  8,  9,  9,  9,  9,  9,  9,  9,  9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11,
+                        11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+                        14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16,
+                        16, 17, 17, 17, 17])
+        idy = np.array([11, 12, 13, 14,  9, 10, 11, 12, 13, 14, 15, 16,  9, 10, 11, 12, 13, 14, 15, 16,  8,  9, 10, 11, 12,
+                        13, 14, 15, 16, 17,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+                        8, 9, 10, 11, 12, 13, 14, 15, 16, 17,  9, 10, 11, 12, 13, 14, 15, 16, 9, 10, 11, 12, 13, 14, 15, 16,
+                        11, 12, 13, 14])
+        expected = np.ones((30, 45))
+        expected[:, :] = 400.
+        expected[idx, idy] = 800.
+>       assert (actual == expected).all()
+E       assert False
+E        +  where False = <built-in method all of numpy.ndarray object at 0x7feb7cee3630>()
+E        +    where <built-in method all of numpy.ndarray object at 0x7feb7cee3630> = array([[400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       ...,\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.]]) == array([[400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       ...,\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.],\n       [400., 400., 400., ..., 400., 400., 400.]])
+E             Full diff:
+E               array([[400., 400., 400., ..., 400., 400., 400.],
+E                      [400., 400., 400., ..., 400., 400., 400.],
+E                      [400., 400., 400., ..., 400., 400., 400.],
+E                      ...,
+E                      [400., 400., 400., ..., 400., 400., 400.],
+E                      [400., 400., 400., ..., 400., 400., 400.],
+E                      [400., 400., 400., ..., 400., 400., 400.]],
+E               ).all
+
+test_diffusion2d.py:45: AssertionError
+
+
+============================== 2 failed in 0.16s ===============================
+
+Process finished with exit code 1
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
