@@ -47,7 +47,7 @@ class SolveDiffusion2D:
         self.h = h
         self.dx = dx
         self.dy = dy
-        self.nx = int(w / dx)+1
+        self.nx = int(w / dx)
         self.ny = int(h / dy)
         
                   
@@ -62,12 +62,12 @@ class SolveDiffusion2D:
         
         # Computing a stable time step
         dx2, dy2 = self.dx * self.dx, self.dy * self.dy
-        self.dt = dx2 * dy2 / (2 * self.D * (dx2 + dy2)) - 0.05
+        self.dt = dx2 * dy2 / (2 * self.D * (dx2 + dy2))
 
         print("dt = {}".format(self.dt))
 
     def set_initial_condition(self):
-        u = (self.T_cold+50) * np.ones((self.nx, self.ny))
+        u = self.T_cold * np.ones((self.nx, self.ny))
 
         # Initial conditions - circle of radius r centred at (cx,cy) (mm)
         r, cx, cy = 2, 5, 5
