@@ -41,4 +41,4 @@ def test_set_initial_condition():
             p2 = (i * solver.dx - cx) ** 2 + (j * solver.dy - cy) ** 2
             if p2 < r2:
                 expected_u[i, j] = solver.T_hot
-    assert np.isclose(u,expected_u).all()
+    assert(u == expected_u).all()
