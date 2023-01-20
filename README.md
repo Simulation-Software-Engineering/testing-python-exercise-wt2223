@@ -45,198 +45,138 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_initialize_domain - assert
 #### all functions broken:
 
 ```
-=================================================== test session starts ===================================================
-platform win32 -- Python 3.10.0, pytest-7.2.0, pluggy-1.0.0
-rootdir: D:\GitHub\SSE\testing-python-exercise-wt2223
-collected 5 items
+============================================================================================================================================= test session starts =============================================================================================================================================
+platform win32 -- Python 3.10.7, pytest-7.2.1, pluggy-1.0.0
+rootdir: D:\Repositories\SimulationSoftwareEngineering\testing-python-exercise-wt2223
+collected 3 items                                                                                                                                                                                                                                                                                              
 
-tests\integration\test_diffusion2d.py ..                                                                             [ 40%]
-tests\unit\test_diffusion2d_functions.py FFF                                                                         [100%]
+tests\unit\test_diffusion2d_functions.py FFF                                                                                                                                                                                                                                                             [100%]
 
-======================================================== FAILURES =========================================================
-_________________________________________________ test_initialize_domain __________________________________________________
+================================================================================================================================================== FAILURES ===================================================================================================================================================
+___________________________________________________________________________________________________________________________________ TestDiffusion2D.test_initialize_domain ____________________________________________________________________________________________________________________________________
 
-    def test_initialize_domain():
+self = <test_diffusion2d_functions.TestDiffusion2D testMethod=test_initialize_domain>
+
+    def test_initialize_domain(self):
         """
         Check function SolveDiffusion2D.initialize_domain
         """
-        solver = SolveDiffusion2D()
 
-        for i in range(1000):
+        for i in range(10):
             w = np.random.rand() * 100
             h = np.random.rand() * 100
             dx = np.random.rand()
             dy = np.random.rand()
-            solver.initialize_domain(w=w, h=h, dx=dx, dy=dy)
->           assert solver.nx == w // dx
-E           assert 169 == (94.67744282534127 // 0.5232638101357804)
-E            +  where 169 = <diffusion2d.SolveDiffusion2D object at 0x0000023837033220>.nx
+            self.solver.initialize_domain(w=w, h=h, dx=dx, dy=dy)
+>           self.assertEqual(self.solver.nx, w // dx)
+E           AssertionError: 4 != 21.0
 
-tests\unit\test_diffusion2d_functions.py:22: AssertionError
-___________________________________________ test_initialize_physical_parameters ___________________________________________
+tests\unit\test_diffusion2d_functions.py:28: AssertionError
+_____________________________________________________________________________________________________________________________ TestDiffusion2D.test_initialize_physical_parameters _____________________________________________________________________________________________________________________________
 
-    def test_initialize_physical_parameters():
+self = <test_diffusion2d_functions.TestDiffusion2D testMethod=test_initialize_physical_parameters>
+
+    def test_initialize_physical_parameters(self):
         """
         Checks function SolveDiffusion2D.initialize_domain
         """
-        solver = SolveDiffusion2D()
+        self.solver.w = 10.
+        self.solver.h = 10.
+        self.solver.dx = 0.1
+        self.solver.dy = 0.1
+        self.solver.nx = 100
+        self.solver.ny = 100
 
-        solver.w = 10.
-        solver.h = 10.
-        solver.dx = 0.1
-        solver.dy = 0.1
-        solver.nx = 100
-        solver.ny = 100
+        dx2, dy2 = self.solver.dx ** 2, self.solver.dy**2
 
-        dx2, dy2 = solver.dx ** 2, solver.dy**2
-
-        for i in range(1000):
+        for i in range(10):
             d = np.random.rand() * 100
             T_cold = np.random.rand() * 10000
             T_hot = np.random.rand() * 10000
-            solver.initialize_physical_parameters(d=d, T_cold=T_cold, T_hot=T_hot)
-            assert solver.D == d
-            assert solver.T_cold == T_cold
-            assert solver.T_hot == T_hot
+            self.solver.initialize_physical_parameters(
+                d=d, T_cold=T_cold, T_hot=T_hot)
 
-            dt = pytest.approx(dx2 * dy2 / (2 * solver.D * (dx2 + dy2)), 0.01)
->           assert solver.dt == dt
-E           assert 8.540838119817876e-05 == 0.00012811257...6814 ± 1.3e-06
-E             comparison failed
-E             Obtained: 8.540838119817876e-05
-E             Expected: 0.00012811257179726814 ± 1.3e-06
+            self.assertEqual(self.solver.D, d)
+            self.assertEqual(self.solver.T_cold, T_cold)
+            self.assertEqual(self.solver.T_hot, T_hot)
 
-tests\unit\test_diffusion2d_functions.py:51: AssertionError
--------------------------------------------------- Captured stdout call ---------------------------------------------------
-dt = 8.540838119817876e-05
-_______________________________________________ test_set_initial_condition ________________________________________________
+            dt = dx2 * dy2 / (2 * self.solver.D * (dx2 + dy2))
+>           self.assertAlmostEqual(self.solver.dt, dt, 5)
+E           AssertionError: 4.028530148514474e-05 != 8.057060297028948e-05 within 5 places (4.028530148514474e-05 difference)
 
-    def test_set_initial_condition():
+tests\unit\test_diffusion2d_functions.py:56: AssertionError
+-------------------------------------------------------------------------------------------------------------------------------------------- Captured stdout call ---------------------------------------------------------------------------------------------------------------------------------------------
+dt = 4.028530148514474e-05
+_________________________________________________________________________________________________________________________________ TestDiffusion2D.test_set_initial_condition __________________________________________________________________________________________________________________________________
+
+self = <test_diffusion2d_functions.TestDiffusion2D testMethod=test_set_initial_condition>
+
+    def test_set_initial_condition(self):
         """
         Checks function SolveDiffusion2D.get_initial_function
         """
-        solver = SolveDiffusion2D()
 
-        solver.w = 10.
-        solver.h = 10.
-        solver.dx = 0.1
-        solver.dy = 0.1
-        solver.nx = 100
-        solver.ny = 100
+        self.solver.w = 10.
+        self.solver.h = 10.
+        self.solver.dx = 0.1
+        self.solver.dy = 0.1
+        self.solver.nx = 100
+        self.solver.ny = 100
+        self.solver.D = 4.
+        self.solver.T_cold = 300.
+        self.solver.T_hot = 700.
+        self.solver.dt = 0.000625
 
-        solver.D = 4.
-        solver.T_cold = 300.
-        solver.T_hot = 700.
-        solver.dt = 0.000625
+        u = self.solver.set_initial_condition()
+        self.assertEqual(u.shape, (100, 100))
+        self.assertEqual(u.min(), self.solver.T_cold)
+>       self.assertEqual(u.max(), self.solver.T_hot)
+E       AssertionError: 1400.0 != 700.0
 
-        u = solver.set_initial_condition()
-        assert u.shape == (100, 100)
-        assert u.min() == solver.T_cold
->       assert u.max() == solver.T_hot
-E       assert 1400.0 == 700.0
-E        +  where 1400.0 = <built-in method max of numpy.ndarray object at 0x000002383707EE50>()
-E        +    where <built-in method max of numpy.ndarray object at 0x000002383707EE50> = array([[300., 300., 300., ..., 300., 300., 300.],\n       [300., 300., 300., ..., 300., 300., 300.],\n       [300., 300....300., 300., 300.],\n       [300., 300., 300., ..., 300., 300., 300.],\n       [300., 300., 300., ..., 300., 300., 300.]]).max
-E        +  and   700.0 = <diffusion2d.SolveDiffusion2D object at 0x00000238370984C0>.T_hot
-
-tests\unit\test_diffusion2d_functions.py:75: AssertionError
-================================================= short test summary info =================================================
-FAILED tests/unit/test_diffusion2d_functions.py::test_initialize_domain - assert 169 == (94.67744282534127 // 0.5232638101357804)
-FAILED tests/unit/test_diffusion2d_functions.py::test_initialize_physical_parameters - assert 8.540838119817876e-05 == 0.00012811257...6814 ± 1.3e-06
-FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - assert 1400.0 == 700.0
-=============================================== 3 failed, 2 passed in 1.36s ===============================================
+tests\unit\test_diffusion2d_functions.py:77: AssertionError
+=========================================================================================================================================== short test summary info ===========================================================================================================================================
+FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_initialize_domain - AssertionError: 4 != 21.0
+FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_initialize_physical_parameters - AssertionError: 4.028530148514474e-05 != 8.057060297028948e-05 within 5 places (4.028530148514474e-05 difference)
+FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_set_initial_condition - AssertionError: 1400.0 != 700.0
+============================================================================================================================================== 3 failed in 0.49s ==============================================================================================================================================
 ```
 
 ### unittest log
 
 ```
-Launching unittests with arguments python -m unittest D:/GitHub/SSE/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py in D:\GitHub\SSE\testing-python-exercise-wt2223\tests\unit
-
-
-
-111.0 != 37
-
-Expected :37
-Actual   :111.0
-<Click to see difference>
-
+Fdt = 4.448331115120221e-05
+FF
+======================================================================
+FAIL: test_initialize_domain (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Check function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\Programme & Funktionen\PyCharm Community Edition 2019.2.2\helpers\pycharm\teamcity\diff_tools.py", line 32, in _patched_equals
-    old(self, first, second, msg)
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 839, in assertEqual
-    assertion_func(first, second, msg=msg)
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 832, in _baseAssertEqual
-    raise self.failureException(msg)
-AssertionError: 37 != 111.0
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 59, in testPartExecutor
-    yield
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 615, in run
-    testMethod()
-  File "D:\GitHub\SSE\testing-python-exercise-wt2223\tests\unit\test_diffusion2d_functions.py", line 28, in test_initialize_domain
+  File "D:\Repositories\SimulationSoftwareEngineering\testing-python-exercise-wt2223\tests\unit\test_diffusion2d_functions.py", line 28, in test_initialize_domain
     self.assertEqual(self.solver.nx, w // dx)
+AssertionError: 124 != 34.0
 
-dt = 0.0002837885791219549
-D:\GitHub\SSE\testing-python-exercise-wt2223\tests\unit\test_diffusion2d_functions.py:56: DeprecationWarning: Please use assertAlmostEqual instead.
-  self.assertAlmostEquals(self.solver.dt, dt, 2)
-dt = 0.0001524399938569907
-dt = 2.0613416973528867e-05
-dt = 0.0002049174953392603
-dt = 0.00014924574560637533
-dt = 9.995065225381505e-05
-dt = 0.0001798893416755572
-dt = 0.00011597342969159412
-dt = 0.00016356510992831505
-dt = 0.0003962470475809662
-
-
-Ran 3 tests in 0.030s
-
-FAILED (failures=2)
-
-
-700.0 != 490000.0
-
-Expected :490000.0
-Actual   :700.0
-<Click to see difference>
-
+======================================================================
+FAIL: test_initialize_physical_parameters (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Checks function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\Programme & Funktionen\PyCharm Community Edition 2019.2.2\helpers\pycharm\teamcity\diff_tools.py", line 32, in _patched_equals
-    old(self, first, second, msg)
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 839, in assertEqual
-    assertion_func(first, second, msg=msg)
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 832, in _baseAssertEqual
-    raise self.failureException(msg)
-AssertionError: 490000.0 != 700.0
+  File "D:\Repositories\SimulationSoftwareEngineering\testing-python-exercise-wt2223\tests\unit\test_diffusion2d_functions.py", line 56, in test_initialize_physical_parameters
+    self.assertAlmostEqual(self.solver.dt, dt, 5)
+AssertionError: 4.448331115120221e-05 != 8.896662230240442e-05 within 5 places (4.448331115120221e-05 difference)
 
-During handling of the above exception, another exception occurred:
-
+======================================================================
+FAIL: test_set_initial_condition (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Checks function SolveDiffusion2D.get_initial_function
+----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 59, in testPartExecutor
-    yield
-  File "D:\Programme & Funktionen\Python3\lib\unittest\case.py", line 615, in run
-    testMethod()
-  File "D:\GitHub\SSE\testing-python-exercise-wt2223\tests\unit\test_diffusion2d_functions.py", line 77, in test_set_initial_condition
+  File "D:\Repositories\SimulationSoftwareEngineering\testing-python-exercise-wt2223\tests\unit\test_diffusion2d_functions.py", line 77, in test_set_initial_condition
     self.assertEqual(u.max(), self.solver.T_hot)
+AssertionError: 1400.0 != 700.0
 
+----------------------------------------------------------------------
+Ran 3 tests in 0.007s
 
-Assertion failed
-
-Assertion failed
-
-Process finished with exit code 1
-
-Assertion failed
-
-Assertion failed
-
-Assertion failed
-
-Assertion failed
-
+FAILED (failures=3)
 ```
 
 ### Integration Test Log
