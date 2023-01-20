@@ -1,7 +1,7 @@
 numpy
 matplotlib
 pytest
-untitest
+unittest
 pluggy
 pip
 coverage
