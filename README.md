@@ -6,6 +6,7 @@ Please follow the instructions in [python_testing_exercise.md](https://github.co
 
 ### pytest log
 
+```
 ============================= test session starts ==============================
 platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/sumanth0703/Desktop/testing-python-exercise-wt2223
@@ -86,10 +87,11 @@ tests/unit/test_diffusion2d_functions.py:56: AssertionError
 FAILED tests/unit/test_diffusion2d_functions.py::test_initialize_domain - assert 200 == 201
 FAILED tests/unit/test_diffusion2d_functions.py::test_initialize_physical_parameters - assert -0.0492 == 0.0008 ± 8.0e-10
 FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - assert False
-
+```
 
 ### unittest log
 
+```
 Fdt = -0.0492
 FF
 ======================================================================
@@ -123,9 +125,11 @@ AssertionError: False is not true
 Ran 3 tests in 0.004s
 
 FAILED (failures=3)
+```
 
 ### Integration test log
 
+```
 ============================= test session starts ==============================
 platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/sumanth0703/Desktop/testing-python-exercise-wt2223
@@ -190,7 +194,7 @@ dt = 0.03
 =========================== short test summary info ============================
 FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - assert -0.0492 == 0.0008 ± 8.0e-10
 FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - assert False
-
+```
 
 ## Citing
 
