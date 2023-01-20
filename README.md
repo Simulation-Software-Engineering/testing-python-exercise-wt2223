@@ -182,58 +182,15 @@ FAILED (failures=3)
 ### Integration Test Log
 
 ```
-============================= test session starts =============================
-platform win32 -- Python 3.7.3, pytest-7.2.1, pluggy-1.0.0 -- D:\Programme & Funktionen\Python3\python.exe
-cachedir: .pytest_cache
-rootdir: D:\GitHub\SSE\testing-python-exercise-wt2223\tests\integration
-collecting ... collected 2 items
+======================================================================================================== test session starts ========================================================================================================
+platform win32 -- Python 3.10.7, pytest-7.2.1, pluggy-1.0.0
+rootdir: D:\Repositories\SimulationSoftwareEngineering\testing-python-exercise-wt2223
+collected 2 items
 
-test_diffusion2d.py::test_initialize_physical_parameters FAILED          [ 50%]dt = 0.0036764705882352945
+tests\integration\test_diffusion2d.py FF                                                                                                                                                                                       [100%]
 
-test_diffusion2d.py:9 (test_initialize_physical_parameters)
-0.0036764705882352945 != 0.00551 ± 5.5e-06
-
-Expected :0.00551 ± 5.5e-06
-Actual   :0.0036764705882352945
-<Click to see difference>
-
-def test_initialize_physical_parameters():
-        """
-        Checks function SolveDiffusion2D.initialize_domain
-        """
-        solver = SolveDiffusion2D()
-        solver.initialize_domain(w=54846., h=546., dx=0.3, dy=0.5)
-        solver.initialize_physical_parameters(d=6., T_cold=400., T_hot=420.)
-    
-        expected = pytest.approx(0.00551, 0.001)
->       assert solver.dt == expected
-E       assert 0.0036764705882352945 == 0.00551 ± 5.5e-06
-
-test_diffusion2d.py:19: AssertionError
-
-test_diffusion2d.py::test_set_initial_condition FAILED                   [100%]dt = 0.0004166666666666668
-
-test_diffusion2d.py:21 (test_set_initial_condition)
-def test_set_initial_condition():
-        """
-        Checks function SolveDiffusion2D.get_initial_function
-        """
-        solver = SolveDiffusion2D()
-        solver.initialize_domain(100., 100., 0.1, .1)
-        solver.initialize_physical_parameters(4., 1., 1.)
-    
-        actual_u = solver.set_initial_condition()
-        expected_u = np.ones((1000, 1000))
->       assert np.array_equal(expected_u, actual_u)
-E       assert False
-E        +  where False = <function array_equal at 0x0000018F651109D8>(array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       ...,\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.]]), array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       ...,\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.]]))
-E        +    where <function array_equal at 0x0000018F651109D8> = np.array_equal
-
-test_diffusion2d.py:32: AssertionError
-
-
-================================== FAILURES ===================================
-_____________________ test_initialize_physical_parameters _____________________
+============================================================================================================= FAILURES ==============================================================================================================
+________________________________________________________________________________________________ test_initialize_physical_parameters ________________________________________________________________________________________________
 
     def test_initialize_physical_parameters():
         """
@@ -242,15 +199,18 @@ _____________________ test_initialize_physical_parameters _____________________
         solver = SolveDiffusion2D()
         solver.initialize_domain(w=54846., h=546., dx=0.3, dy=0.5)
         solver.initialize_physical_parameters(d=6., T_cold=400., T_hot=420.)
-    
+
         expected = pytest.approx(0.00551, 0.001)
 >       assert solver.dt == expected
-E       assert 0.0036764705882352945 == 0.00551 ± 5.5e-06
+E       assert 0.0027573529411764703 == 0.00551 ± 5.5e-06
+E         comparison failed
+E         Obtained: 0.0027573529411764703
+E         Expected: 0.00551 ± 5.5e-06
 
-test_diffusion2d.py:19: AssertionError
----------------------------- Captured stdout call -----------------------------
-dt = 0.0036764705882352945
-_________________________ test_set_initial_condition __________________________
+tests\integration\test_diffusion2d.py:19: AssertionError
+------------------------------------------------------------------------------------------------------- Captured stdout call --------------------------------------------------------------------------------------------------------
+dt = 0.0027573529411764703
+____________________________________________________________________________________________________ test_set_initial_condition _____________________________________________________________________________________________________
 
     def test_set_initial_condition():
         """
@@ -259,32 +219,22 @@ _________________________ test_set_initial_condition __________________________
         solver = SolveDiffusion2D()
         solver.initialize_domain(100., 100., 0.1, .1)
         solver.initialize_physical_parameters(4., 1., 1.)
-    
+
         actual_u = solver.set_initial_condition()
         expected_u = np.ones((1000, 1000))
 >       assert np.array_equal(expected_u, actual_u)
 E       assert False
-E        +  where False = <function array_equal at 0x0000018F651109D8>(array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       ...,\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.]]), array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       ...,\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.]]))
-E        +    where <function array_equal at 0x0000018F651109D8> = np.array_equal
+E        +  where False = <function array_equal at 0x00000260D28ABEB0>(array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       ...,\n       [1., 1., 1., ..., 1.,
+1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.]]), array([[1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       ...,\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.],\n       [1., 1., 1., ..., 1., 1., 1.]]))
+E        +    where <function array_equal at 0x00000260D28ABEB0> = np.array_equal
 
-test_diffusion2d.py:32: AssertionError
----------------------------- Captured stdout call -----------------------------
-dt = 0.0004166666666666668
-=========================== short test summary info ===========================
-FAILED test_diffusion2d.py::test_initialize_physical_parameters - assert 0.00...
-FAILED test_diffusion2d.py::test_set_initial_condition - assert False
-============================== 2 failed in 1.49s ==============================
-
-Process finished with exit code 0
-
-Assertion failed
-
-Assertion failed
-
-Assertion failed
-
-Assertion failed
-
+tests\integration\test_diffusion2d.py:32: AssertionError
+------------------------------------------------------------------------------------------------------- Captured stdout call --------------------------------------------------------------------------------------------------------
+dt = 0.00031250000000000006
+====================================================================================================== short test summary info ======================================================================================================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - assert 0.0027573529411764703 == 0.00551 ± 5.5e-06
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - assert False
+========================================================================================================= 2 failed in 0.92s =========================================================================================================
 ```
 
 ## Citing
