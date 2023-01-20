@@ -1,0 +1,7 @@
+numpy
+matplotlib
+pytest
+untitest
+pluggy
+pip
+coverage
