@@ -53,7 +53,7 @@ class TestDiffusion2D(unittest.TestCase):
             self.assertEqual(self.solver.T_hot, T_hot)
 
             dt = dx2 * dy2 / (2 * self.solver.D * (dx2 + dy2))
-            self.assertAlmostEquals(self.solver.dt, dt, 2)
+            self.assertAlmostEqual(self.solver.dt, dt, 5)
 
     def test_set_initial_condition(self):
         """
@@ -75,7 +75,3 @@ class TestDiffusion2D(unittest.TestCase):
         self.assertEqual(u.shape, (100, 100))
         self.assertEqual(u.min(), self.solver.T_cold)
         self.assertEqual(u.max(), self.solver.T_hot)
-
-
-if __name__ == '__main__':
-    unittest.main()
