@@ -8,6 +8,7 @@ Please follow the instructions in [python_testing_exercise.md](https://github.co
 
 #### Break test_initial_domain
 
+```
 /home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py
 Testing started at 17:06 ...
 Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit
@@ -83,6 +84,7 @@ test_diffusion2d_functions.py::test_set_initial_condition PASSED         [100%]
 ========================= 2 failed, 4 passed in 0.17s ==========================
 
 Process finished with exit code 1
+```
 
 #### Break test_initialize_physical_parameters
 
