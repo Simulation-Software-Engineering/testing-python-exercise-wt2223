@@ -122,6 +122,72 @@ Ran 3 tests in 0.001s
 
 FAILED (failures=3)
 
+### Integration test log
+
+================================================================ FAILURES ================================================================
+__________________________________________________ test_initialize_physical_parameters ___________________________________________________
+
+    def test_initialize_physical_parameters():
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+        w, h, dx, dy = 3., 2., 1., 0.5
+        d, T_cold, T_hot = 5., 200., 500.
+    
+        solver.initialize_domain(w, h, dx, dy)
+        solver.initialize_physical_parameters(d, T_cold, T_hot)
+    
+        expected_dt = pytest.approx(0.02, 0.01)
+        actual_dt = solver.dt
+>       assert expected_dt == actual_dt
+E       assert 0.02 ± 2.0e-04 == 0.08
+E         comparison failed
+E         Obtained: 0.08
+E         Expected: 0.02 ± 2.0e-04
+
+tests/integration/test_diffusion2d.py:22: AssertionError
+---------------------------------------------------------- Captured stdout call ----------------------------------------------------------
+dt = 0.08
+_______________________________________________________ test_set_initial_condition _______________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+    
+        w, h, dx, dy = 3., 2., 1., 0.5
+        d, T_cold, T_hot = 5., 200., 500.
+    
+        solver.initialize_domain(w, h, dx, dy)
+        solver.initialize_physical_parameters(d, T_cold, T_hot)
+    
+        expected_u = T_cold * np.ones((solver.nx, solver.ny))
+    
+        r, cx, cy = 2, 5, 5
+        r2 = r ** 2
+        for i in range(3):
+            for j in range(4):
+                p2 = (i * 1 - cx) ** 2 + (j * 0.5 - cy) ** 2
+                if p2 < r2:
+                    expected_u[i, j] = 500.
+    
+        actual_u = solver.set_initial_condition()
+    
+        for i in range(3):
+            for j in range(4):
+>               assert expected_u[i,j] == actual_u[i,j]
+E               assert 200.0 == 500.0
+
+tests/integration/test_diffusion2d.py:50: AssertionError
+---------------------------------------------------------- Captured stdout call ----------------------------------------------------------
+dt = 0.08
+======================================================== short test summary info =========================================================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - assert 0.02 ± 2.0e-04 == 0.08
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - assert 200.0 == 500.0
+=========================================================== 2 failed in 0.44s ============================================================
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
