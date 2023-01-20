@@ -88,6 +88,7 @@ Process finished with exit code 1
 
 #### Break test_initialize_physical_parameters
 
+```
 /home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py
 Testing started at 17:11 ...
 Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit
@@ -169,9 +170,11 @@ test_diffusion2d_functions.py::test_set_initial_condition PASSED         [100%]
 ========================= 2 failed, 4 passed in 0.16s ==========================
 
 Process finished with exit code 1
+```
 
 #### Break test_set_initial_condition
 
+```
 /home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py
 Testing started at 17:13 ...
 Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit
@@ -248,11 +251,13 @@ test_diffusion2d_functions.py:59: AssertionError
 ========================= 1 failed, 5 passed in 0.18s ==========================
 
 Process finished with exit code 1
+```
 
 ### unittest log
 
 #### Break test_initial_domain
 
+```
 /home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py
 Testing started at 13:06 ...
 Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit
@@ -370,9 +375,11 @@ test_diffusion2d_functions.py::TestOperations::test_set_initial_condition
 ========================= 4 failed, 8 passed in 0.19s ==========================
 
 Process finished with exit code 1
+```
 
 #### Break test_initialize_physical_parameters
 
+```
 /home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py 
 Testing started at 13:07 ...
 Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit
@@ -496,9 +503,11 @@ test_diffusion2d_functions.py::TestOperations::test_set_initial_condition
 ========================= 4 failed, 8 passed in 0.19s ==========================
 
 Process finished with exit code 1
+```
 
 #### Break test_set_initial_condition
 
+```
 /home/chris/programs/mambaforge/envs/SSE_exercise_testing/bin/python /opt/pycharm-2022.2.3/plugins/python/helpers/pycharm/_jb_pytest_runner.py --path /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py 
 Testing started at 13:08 ...
 Launching pytest with arguments /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py --no-header --no-summary -q in /home/chris/projects/AI_backmap/lecture_simulation_software_engineering/exercise/exercise7/testing-python-exercise-wt2223/tests/unit
@@ -636,6 +645,7 @@ E                  [400., 400., 400., ..., 400., 400., 400.],...
 ========================= 2 failed, 10 passed in 0.20s =========================
 
 Process finished with exit code 1
+```
 
 ## Citing
 
