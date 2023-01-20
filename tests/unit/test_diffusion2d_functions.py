@@ -3,63 +3,67 @@ Tests for functions in class SolveDiffusion2D
 """
 
 from diffusion2d import SolveDiffusion2D
-import pytest
+import unittest
 import numpy as np
 
-def test_initialize_domain():
-    """
-    Check function SolveDiffusion2D.initialize_domain
-    """
-    solver = SolveDiffusion2D()
+class TestDiffusion2D(unittest.TestCase):
+    def setUp(self):
+        self.solver = SolveDiffusion2D()
+        self.w = 3.
+        self.h = 2.
+        self.dx = 1.
+        self.dy = 0.5
+        self.nx = 3
+        self.ny = 4
+        self.T_cold = 200.
+        self.T_hot = 500.
 
-    # w=3., h=2., dx=1, dy=0.5
-    solver.initialize_domain(3., 2., 1., 0.5)
+    def test_initialize_domain(self):
+        """
+        Check function SolveDiffusion2D.initialize_domain
+        """
+        self.solver.initialize_domain(3., 2., 1., 0.5)
 
-    # Expected results
-    expected_nx = 3
-    expected_ny = 4
+        # Expected results
+        expected_nx = self.nx
+        expected_ny = self.ny
 
-    # Actual results
-    actual_nx = solver.nx
-    actual_ny = solver.ny
+        # Actual results
+        actual_nx = self.solver.nx
+        actual_ny = self.solver.ny
 
-    assert expected_nx == actual_nx
-    assert expected_ny == actual_ny
+        self.assertEqual(expected_nx, actual_nx)
+        self.assertEqual(expected_ny, actual_ny)
 
+    def test_initialize_physical_parameters(self):
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        self.solver.dx, self.solver.dy = self.dx, self.dy
+        self.solver.initialize_physical_parameters(5., 200., 500.)
 
-def test_initialize_physical_parameters():
-    """
-    Checks function SolveDiffusion2D.initialize_domain
-    """
-    solver = SolveDiffusion2D()
+        expected_dt = 0.02
 
-    # dx=1, dy=0.5
-    # d=5., T_cold=200., T_hot=500.
-    solver.dx, solver.dy = 1, 0.5
-    solver.initialize_physical_parameters(5., 200., 500.)
+        actual_dt = self.solver.dt
 
-    expected_dt = pytest.approx(0.02, abs=0.01)
+        self.assertAlmostEqual(expected_dt, actual_dt, 2)
 
-    actual_dt = solver.dt
+    def test_set_initial_condition(self):
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
 
-    assert expected_dt == actual_dt
+        self.solver.nx, self.solver.ny = self.nx, self.ny
+        self.solver.dx, self.solver.dy = self.dx, self.dy
+        self.solver.T_cold, self.solver.T_hot = self.T_cold, self.T_hot
 
-def test_set_initial_condition():
-    """
-    Checks function SolveDiffusion2D.get_initial_function
-    """
-    solver = SolveDiffusion2D()
+        expected_u = self.T_cold * np.ones((self.nx, self.ny))
 
-    # nx=3, ny=4, T_cold=200
-    solver.nx, solver.ny = 3, 4
-    solver.dx, solver.dy = 1, 0.5
-    solver.T_cold, solver.T_hot = 200, 500
+        actual_u = self.solver.set_initial_condition()
 
-    expected_u = 200 * np.ones((3,4))
-
-    actual_u = solver.set_initial_condition()
-
-    for i in range(3):
-        for j in range(4):
-            assert expected_u[i,j] == actual_u[i,j]
-    
+        for i in range(self.nx):
+            for j in range(self.ny):
+                self.assertEqual(expected_u[i,j], actual_u[i,j])
+        
+if __name__ == '__main__':
+    unittest.main()

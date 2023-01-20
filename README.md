@@ -88,6 +88,40 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - as
 
 ### unittest log
 
+Fdt = 0.08
+FF
+======================================================================
+FAIL: test_initialize_domain (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Check function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sinan/Documents/WS23/SSR/Exercises/python-testing/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 36, in test_initialize_domain
+    self.assertEqual(expected_ny, actual_ny)
+AssertionError: 4 != 2
+
+======================================================================
+FAIL: test_initialize_physical_parameters (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Checks function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sinan/Documents/WS23/SSR/Exercises/python-testing/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 49, in test_initialize_physical_parameters
+    self.assertAlmostEqual(expected_dt, actual_dt, 2)
+AssertionError: 0.02 != 0.08 within 2 places (0.06 difference)
+
+======================================================================
+FAIL: test_set_initial_condition (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Checks function SolveDiffusion2D.get_initial_function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/sinan/Documents/WS23/SSR/Exercises/python-testing/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 66, in test_set_initial_condition
+    self.assertEqual(expected_u[i,j], actual_u[i,j])
+AssertionError: 200.0 != 500.0
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
