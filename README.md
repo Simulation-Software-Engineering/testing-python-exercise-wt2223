@@ -6,7 +6,7 @@ Please follow the instructions in [python_testing_exercise.md](https://github.co
 
 ### pytest log
 
-```shell
+```console
 ==================================================================================== test session starts =====================================================================================
 platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/torben/Documents/git/SSE/testing-python-exercise-wt2223
@@ -75,7 +75,7 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - as
 
 ### unittest log
 
-```
+```console
 Fdt = 0.125
 FF
 ======================================================================
@@ -114,48 +114,7 @@ FAILED (failures=3)
 
 ### integration log
 
-```
-==================================================================================================================================== test session starts ====================================================================================================================================
-platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
-rootdir: /home/torben/Documents/git/SSE/testing-python-exercise-wt2223
-plugins: anyio-3.6.2
-collected 5 items                                                                                                                                                                                                                                                                           
-
-tests/integration/test_diffusion2d.py .F                                                                                                                                                                                                                                              [ 40%]
-tests/unit/test_diffusion2d_functions.py ...                                                                                                                                                                                                                                          [100%]
-
-========================================================================================================================================= FAILURES ==========================================================================================================================================
-________________________________________________________________________________________________________________________________ test_set_initial_condition _________________________________________________________________________________________________________________________________
-
-    def test_set_initial_condition():
-        """
-        Checks function SolveDiffusion2D.get_initial_function
-        """
-        solver = SolveDiffusion2D()
-        solver.initialize_domain(w=2., h=2., dx=1., dy=1.)
-        solver.initialize_physical_parameters(d=1., T_cold=300., T_hot=400.)
-        u = solver.set_initial_condition()
->       assert u == [[300., 300.], [300., 300.]]
-E       ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
-
-tests/integration/test_diffusion2d.py:26: ValueError
------------------------------------------------------------------------------------------------------------------------------------ Captured stdout call ------------------------------------------------------------------------------------------------------------------------------------
-dt = 0.25
-================================================================================================================================== short test summary info ==================================================================================================================================
-FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
-================================================================================================================================ 1 failed, 4 passed in 0.48s ================================================================================================================================
-SSE/testing-python-exercise-wt2223 [main●] » python3 -m pytest
-==================================================================================================================================== test session starts ====================================================================================================================================
-platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
-rootdir: /home/torben/Documents/git/SSE/testing-python-exercise-wt2223
-plugins: anyio-3.6.2
-collected 5 items                                                                                                                                                                                                                                                                           
-
-tests/integration/test_diffusion2d.py ..                                                                                                                                                                                                                                              [ 40%]
-tests/unit/test_diffusion2d_functions.py ...                                                                                                                                                                                                                                          [100%]
-
-===================================================================================================================================== 5 passed in 0.45s =====================================================================================================================================
-SSE/testing-python-exercise-wt2223 [main●] » python3 -m pytest
+```console
 ==================================================================================================================================== test session starts ====================================================================================================================================
 platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
 rootdir: /home/torben/Documents/git/SSE/testing-python-exercise-wt2223

@@ -17,9 +17,15 @@ class TestOperations(TestCase):
         """
         Check function SolveDiffusion2D.initialize_domain
         """
-        self.solver.initialize_domain(w=40., h=30., dx=0.2, dy=0.2)
-        self.assertEqual(self.solver.nx, 200)
-        self.assertEqual(self.solver.ny,150)
+        w = 40.
+        h = 30.
+        dx = 0.2
+        dy = 0.2
+        self.solver.initialize_domain(w, h, dx, dy)
+        nx_expected = 200
+        ny_expected = 150
+        self.assertEqual(self.solver.nx, nx_expected)
+        self.assertEqual(self.solver.ny, ny_expected)
 
     def test_initialize_physical_parameters(self):
         """
@@ -27,8 +33,12 @@ class TestOperations(TestCase):
         """
         self.solver.dx = 1.
         self.solver.dy = 1.
-        self.solver.initialize_physical_parameters(d=1., T_cold=300., T_hot=700.)
-        self.assertEqual(self.solver.dt, 0.25)
+        d = 1.
+        T_cold = 300.
+        T_hot = 700.
+        self.solver.initialize_physical_parameters(d, T_cold, T_hot)
+        dt_expected = 0.25
+        self.assertEqual(self.solver.dt, dt_expected)
 
     def test_set_initial_condition(self):
         """
