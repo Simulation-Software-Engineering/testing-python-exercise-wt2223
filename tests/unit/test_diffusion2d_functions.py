@@ -33,8 +33,8 @@ class TestDiffusion(TestCase):
         Checks function SolveDiffusion2D.initialize_domain
         """
         solver = SolveDiffusion2D()
-        solver.dx = 2
-        solver.dy= 2
+        solver.dx = 2.
+        solver.dy= 2.
         solver.initialize_physical_parameters(self.d, self.T_cold, self.T_hot)
         self.assertEqual(solver.dt,0.5)
 
