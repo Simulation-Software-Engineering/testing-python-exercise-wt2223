@@ -98,7 +98,55 @@ Ran 3 tests in 0.000s
 
 FAILED (failures=3)
 ```
+##Integration test log
 
+```
+====================================================================================================== test session starts ======================================================================================================
+platform darwin -- Python 3.10.8, pytest-7.2.0, pluggy-1.0.0
+rootdir: /Users/vidushi/development/testing-python-exercise-wt2223
+collected 2 items
+
+tests/integration/test_diffusion2d.py FF                                                                                                                                                                                  [100%]
+
+=========================================================================================================== FAILURES ============================================================================================================
+______________________________________________________________________________________________ test_initialize_physical_parameters ______________________________________________________________________________________________
+
+    def test_initialize_physical_parameters():
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=11.,h=12.,dx=2., dy=2.)
+        solver.initialize_physical_parameters(d=2.,T_cold=100.,T_hot=300.)
+>       assert solver.dt== 0.5
+E       assert 1.0 == 0.5
+E        +  where 1.0 = <diffusion2d.SolveDiffusion2D object at 0x11afb1f90>.dt
+
+tests/integration/test_diffusion2d.py:16: AssertionError
+----------------------------------------------------------------------------------------------------- Captured stdout call ------------------------------------------------------------------------------------------------------
+dt = 1.0
+__________________________________________________________________________________________________ test_set_initial_condition ___________________________________________________________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=15.,h=13.,dx=1., dy=1.)
+        solver.initialize_physical_parameters(d=3.,T_cold=300.,T_hot=200.)
+        u= solver.set_initial_condition()
+>       assert u[0][0]==300.
+E       assert 200.0 == 300.0
+
+tests/integration/test_diffusion2d.py:27: AssertionError
+----------------------------------------------------------------------------------------------------- Captured stdout call ------------------------------------------------------------------------------------------------------
+dt = 0.16666666666666666
+==================================================================================================== short test summary info ====================================================================================================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - assert 1.0 == 0.5
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - assert 200.0 == 300.0
+======================================================================================================= 2 failed in 0.33s =======================================================================================================
+```
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
