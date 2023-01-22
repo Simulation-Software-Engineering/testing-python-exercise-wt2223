@@ -63,6 +63,42 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - as
 ```
 ### unittest log
 
+```
+Fdt = 1.0
+FF
+======================================================================
+FAIL: test_initialize_domain (tests.unit.test_diffusion2d_functions.TestDiffusion)
+Check function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/vidushi/development/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 27, in test_initialize_domain
+    self.assertEqual(solver.nx,75)
+AssertionError: 60 != 75
+
+======================================================================
+FAIL: test_initialize_physical_parameters (tests.unit.test_diffusion2d_functions.TestDiffusion)
+Checks function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/vidushi/development/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 39, in test_initialize_physical_parameters
+    self.assertEqual(solver.dt,0.5)
+AssertionError: 1.0 != 0.5
+
+======================================================================
+FAIL: test_set_initial_condition (tests.unit.test_diffusion2d_functions.TestDiffusion)
+Checks function SolveDiffusion2D.get_initial_function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/vidushi/development/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 55, in test_set_initial_condition
+    self.assertEqual(u[0, 0],100.)
+AssertionError: 300.0 != 100.0
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+FAILED (failures=3)
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
