@@ -164,6 +164,81 @@ FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_set_initi
 ========================= 3 failed, 2 passed in 0.25s ==========================
 ```
 
+### Integration test log
+```
+python -m pytest tests/integration
+```
+```
+============================= test session starts ==============================
+platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/bluzuk/kekw/testing-python-exercise-wt2223
+plugins: anyio-3.6.2
+collected 2 items
+
+tests/integration/test_diffusion2d.py FF                                 [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_initialize_physical_parameters ______________________
+
+    def test_initialize_physical_parameters():
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=5., h=20., dx=0.5, dy=0.5)
+        solver.initialize_physical_parameters(d=2., T_cold=200., T_hot=500.)
+    
+        expected_dt = 0.03125
+        actual_dt = solver.dt
+    
+>       assert (actual_dt == expected_dt)
+E       assert 0.375 == 0.03125
+
+tests/integration/test_diffusion2d.py:20: AssertionError
+----------------------------- Captured stdout call -----------------------------
+dt = 0.375
+__________________________ test_set_initial_condition __________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=5., h=20., dx=0.5, dy=0.5)
+        solver.initialize_physical_parameters(d=2., T_cold=200., T_hot=500.)
+        actual_u = solver.set_initial_condition()
+    
+        T_cold = 200.
+        T_hot = 500.
+        dx, dy = 0.5, 0.5
+        nx, ny = 10, 40
+    
+        expected_u = T_cold * np.ones((nx, ny))
+        # Initial conditions - circle of radius r centred at (cx,cy) (mm)
+        r, cx, cy = 2, 5, 5
+        r2 = r ** 2
+        for i in range(nx):
+            for j in range(ny):
+                p2 = (i * dx - cx) ** 2 + (j * dy - cy) ** 2
+                if p2 < r2:
+                    expected_u[i, j] = T_hot
+    
+>       assert (actual_u.all() == expected_u.all())
+E       assert False == True
+E        +  where False = <built-in method all of numpy.ndarray object at 0x7fecbf599890>()
+E        +    where <built-in method all of numpy.ndarray object at 0x7fecbf599890> = array([[0., 0., 0., ..., 0., 0., 0.],\n       [0., 0., 0., ..., 0., 0., 0.],\n       [0., 0., 0., ..., 0., 0., 0.],\n       ...,\n       [0., 0., 0., ..., 0., 0., 0.],\n       [0., 0., 0., ..., 0., 0., 0.],\n       [0., 0., 0., ..., 0., 0., 0.]]).all
+E        +  and   True = <built-in method all of numpy.ndarray object at 0x7febbb40db90>()
+E        +    where <built-in method all of numpy.ndarray object at 0x7febbb40db90> = array([[200., 200., 200., 200., 200., 200., 200., 200., 200., 200., 200.,\n        200., 200., 200., 200., 200., 200., ...  200., 200., 200., 200., 200., 200., 200., 200., 200., 200., 200.,\n        200., 200., 200., 200., 200., 200., 200.]]).all
+
+tests/integration/test_diffusion2d.py:47: AssertionError
+----------------------------- Captured stdout call -----------------------------
+dt = 0.375
+=========================== short test summary info ============================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - as...
+============================== 2 failed in 0.24s ===============================
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
