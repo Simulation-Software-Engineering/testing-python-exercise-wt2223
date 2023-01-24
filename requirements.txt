@@ -1,0 +1,7 @@
+py
+pip
+numpy
+matplotlib
+pytest
+coverage
+tox
