@@ -80,6 +80,89 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - as
 ```
 
 ### unittest log
+```
+============================= test session starts ==============================
+platform linux -- Python 3.10.8, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/bluzuk/kekw/testing-python-exercise-wt2223
+plugins: anyio-3.6.2
+collected 5 items
+
+tests/integration/test_diffusion2d.py ..                                 [ 40%]
+tests/unit/test_diffusion2d_functions.py FFF                             [100%]
+
+=================================== FAILURES ===================================
+____________________ TestDiffusion2D.test_initialize_domain ____________________
+
+self = <test_diffusion2d_functions.TestDiffusion2D testMethod=test_initialize_domain>
+
+    def test_initialize_domain(self):
+        """
+        Check function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=self.w, h=self.h, dx=self.dx, dy=self.dy)
+    
+        expected_nx = 10
+        expected_ny = 40
+        actual_nx = solver.nx
+        actual_ny = solver.ny
+    
+>       self.assertEqual(actual_nx, expected_nx)
+E       AssertionError: 40 != 10
+
+tests/unit/test_diffusion2d_functions.py:42: AssertionError
+_____________ TestDiffusion2D.test_initialize_physical_parameters ______________
+
+self = <test_diffusion2d_functions.TestDiffusion2D testMethod=test_initialize_physical_parameters>
+
+    def test_initialize_physical_parameters(self):
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+        solver.dx = self.dx
+        solver.dy = self.dy
+    
+        solver.initialize_physical_parameters(d=self.d, T_cold=self.T_cold, T_hot=self.T_hot)
+    
+        actual_dt = solver.dt
+        expected_dt = 0.03125
+    
+>       self.assertEqual(actual_dt, expected_dt)
+E       AssertionError: 0.375 != 0.03125
+
+tests/unit/test_diffusion2d_functions.py:58: AssertionError
+----------------------------- Captured stdout call -----------------------------
+dt = 0.375
+__________________ TestDiffusion2D.test_set_initial_condition __________________
+
+self = <test_diffusion2d_functions.TestDiffusion2D testMethod=test_set_initial_condition>
+
+    def test_set_initial_condition(self):
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.T_cold = self.T_cold
+        solver.T_hot = self.T_hot
+        solver.nx = self.nx
+        solver.ny = self.ny
+        solver.dx = self.dx
+        solver.dy = self.dy
+    
+        actual_u = solver.set_initial_condition()
+        expected_u = self.T_cold * np.ones((self.nx, self.ny))
+    
+>       self.assertEqual(actual_u.all(), expected_u.all())
+E       AssertionError: False != True
+
+tests/unit/test_diffusion2d_functions.py:75: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_initialize_domain
+FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_initialize_physical_parameters
+FAILED tests/unit/test_diffusion2d_functions.py::TestDiffusion2D::test_set_initial_condition
+========================= 3 failed, 2 passed in 0.25s ==========================
+```
 
 ## Citing
 
