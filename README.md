@@ -117,6 +117,8 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - as
 
 ```
 
+### unittest log
+
 ```code
 $ python -m unittest tests/unit/test_diffusion2d_functions.py 
 F
@@ -176,7 +178,83 @@ FAILED (failures=1)
 
 ```
 
-### unittest log
+### Integration Test log
+
+```code
+$ python -m pytest tests/integration/test_diffusion2d.py 
+=============================================================================================== test session starts ===============================================================================================
+platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/nimo/SSE/exercise8/testing-python-exercise-wt2223
+plugins: xdist-3.1.0, allure-pytest-2.12.0, metadata-2.0.4, rerunfailures-11.0, anyio-3.6.2, json-report-1.5.0, Faker-16.6.0, order-1.0.1
+collected 1 item                                                                                                                                                                                                  
+
+tests/integration/test_diffusion2d.py F                                                                                                                                                                     [100%]
+
+==================================================================================================== FAILURES =====================================================================================================
+_______________________________________________________________________________________ test_initialize_physical_parameters _______________________________________________________________________________________
+
+    def test_initialize_physical_parameters():
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=5., h=20., dx=5., dy=20.)
+        solver.initialize_physical_parameters(d=1., T_cold=3., T_hot=2.)
+        expected_dt = pytest.approx(11.76,abs=0.01)
+>       assert solver.dt == expected_dt
+E       assert 100.0 == 11.76 ± 1.0e-02
+E         comparison failed
+E         Obtained: 100.0
+E         Expected: 11.76 ± 1.0e-02
+
+tests/integration/test_diffusion2d.py:16: AssertionError
+---------------------------------------------------------------------------------------------- Captured stdout call -----------------------------------------------------------------------------------------------
+dt = 100.0
+============================================================================================= short test summary info =============================================================================================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - assert 100.0 == 11.76 ± 1.0e-02
+================================================================================================ 1 failed in 0.39s ================================================================================================
+```
+
+```code
+$ python -m pytest tests/integration/test_diffusion2d.py 
+=============================================================================================== test session starts ===============================================================================================
+platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
+rootdir: /home/nimo/SSE/exercise8/testing-python-exercise-wt2223
+plugins: xdist-3.1.0, allure-pytest-2.12.0, metadata-2.0.4, rerunfailures-11.0, anyio-3.6.2, json-report-1.5.0, Faker-16.6.0, order-1.0.1
+collected 2 items                                                                                                                                                                                                 
+
+tests/integration/test_diffusion2d.py .F                                                                                                                                                                    [100%]
+
+==================================================================================================== FAILURES =====================================================================================================
+___________________________________________________________________________________________ test_set_initial_condition ____________________________________________________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=5., h=20., dx=5., dy=20.)
+        solver.initialize_physical_parameters(d=1., T_cold=3., T_hot=2.)
+        expected_u = [[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,]]
+        actual_u = solver.set_initial_condition()
+    
+>       assert (expected_u == actual_u).all()
+E       AttributeError: 'bool' object has no attribute 'all'
+
+tests/integration/test_diffusion2d.py:28: AttributeError
+---------------------------------------------------------------------------------------------- Captured stdout call -----------------------------------------------------------------------------------------------
+dt = 11.764705882352942
+================================================================================================ warnings summary =================================================================================================
+tests/integration/test_diffusion2d.py::test_set_initial_condition
+  /home/nimo/SSE/exercise8/testing-python-exercise-wt2223/tests/integration/test_diffusion2d.py:28: DeprecationWarning: elementwise comparison failed; this will raise an error in the future.
+    assert (expected_u == actual_u).all()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================================================================================= short test summary info =============================================================================================
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - AttributeError: 'bool' object has no attribute 'all'
+===================================================================================== 1 failed, 1 passed, 1 warning in 0.39s ======================================================================================
+
+```
 
 ## Citing
 
