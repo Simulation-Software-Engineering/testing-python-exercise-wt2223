@@ -5,7 +5,7 @@ Example acquired from https://scipython.com/book/chapter-7-matplotlib/examples/t
 """
 
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 class SolveDiffusion2D:
@@ -91,22 +91,22 @@ class SolveDiffusion2D:
 
         return u.copy()
 
-#     def create_figure(self, fig, u, n, fignum):
-#         fignum += 1
-#         ax = fig.add_subplot(220 + fignum)
-#         im = ax.imshow(u.copy(), cmap=plt.get_cmap('hot'), vmin=self.T_cold, vmax=self.T_hot)
-#         ax.set_axis_off()
-#         ax.set_title('{:.1f} ms'.format(n * self.dt * 1000))
-#
-#         return fignum, im
-#
-#
-# def output_figure(fig, im):
-#     fig.subplots_adjust(right=0.85)
-#     cbar_ax = fig.add_axes([0.9, 0.15, 0.03, 0.7])
-#     cbar_ax.set_xlabel('$T$ / K', labelpad=20)
-#     fig.colorbar(im, cax=cbar_ax)
-#     plt.show()
+    def create_figure(self, fig, u, n, fignum):
+        fignum += 1
+        ax = fig.add_subplot(220 + fignum)
+        im = ax.imshow(u.copy(), cmap=plt.get_cmap('hot'), vmin=self.T_cold, vmax=self.T_hot)
+        ax.set_axis_off()
+        ax.set_title('{:.1f} ms'.format(n * self.dt * 1000))
+
+        return fignum, im
+
+
+def output_figure(fig, im):
+    fig.subplots_adjust(right=0.85)
+    cbar_ax = fig.add_axes([0.9, 0.15, 0.03, 0.7])
+    cbar_ax.set_xlabel('$T$ / K', labelpad=20)
+    fig.colorbar(im, cax=cbar_ax)
+    plt.show()
 
 
 def main():
@@ -125,7 +125,7 @@ def main():
     n_output = [0, 10, 50, 100]
 
     fig_counter = 0
-    # fig = plt.figure()
+    fig = plt.figure()
 
     im = None
 
@@ -134,13 +134,13 @@ def main():
         u = DiffusionSolver.do_timestep(u0)
 
         # Create figure
-        # if n in n_output:
-        #     fig_counter, im = DiffusionSolver.create_figure(fig, u, n, fig_counter)
+        if n in n_output:
+             fig_counter, im = DiffusionSolver.create_figure(fig, u, n, fig_counter)
 
         u0 = u.copy()
 
     # Plot output figures
-    # output_figure(fig, im)
+    output_figure(fig, im)
 
 
 if __name__ == "__main__":
