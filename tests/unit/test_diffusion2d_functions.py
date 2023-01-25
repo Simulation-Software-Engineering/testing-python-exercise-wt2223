@@ -4,44 +4,48 @@ Tests for functions in class SolveDiffusion2D
 
 from diffusion2d import SolveDiffusion2D
 import pytest
+import unittest
+import numpy as np
 
-class TestDiffusion2D:
+class TestDiffusion2D(unittest.TestCase):
+
+    def setUp(self):
+        self.solver = SolveDiffusion2D()
+
     def test_initialize_domain(self):
         """
         Check function SolveDiffusion2D.initialize_domain
         """
-        solver = SolveDiffusion2D()
         expected_nx = 1
         expected_ny = 1
-        solver.initialize_domain( w=5., h=20., dx=5., dy=20.)
-        assert solver.nx == expected_nx and solver.ny == expected_ny
+        self.solver.initialize_domain( w=5., h=20., dx=5., dy=20.)
+        self.assertEqual(self.solver.nx,expected_nx)
+        self.assertEqual(self.solver.ny, expected_ny)
 
     def test_initialize_physical_parameters(self):
         """
         Checks function SolveDiffusion2D.initialize_domain
         """
-        solver = SolveDiffusion2D()
-        solver.dx = 5.
-        solver.dy = 20.
+        self.solver.dx = 5.
+        self.solver.dy = 20.
         expected_dx2, expected_dy2 = 25., 400.
-        expected_dt = pytest.approx(11.76,abs=0.01)
+        expected_dt = 11.76
 
-        solver.initialize_physical_parameters(d=1., T_cold=3., T_hot=2.)
+        self.solver.initialize_physical_parameters(d=1., T_cold=3., T_hot=2.)
 
-        assert expected_dt == solver.dt
+        self.assertAlmostEqual(expected_dt, self.solver.dt,2)
 
 
     def test_set_initial_condition(self):
         """
         Checks function SolveDiffusion2D.get_initial_function
         """
-        solver = SolveDiffusion2D()
-        solver.nx, solver.ny = 5, 5
-        solver.dx, solver.dy = 5., 20.
-        solver.T_cold, solver.T_hot = 3., 2.
+        self.solver.nx, self.solver.ny = 5, 5
+        self.solver.dx, self.solver.dy = 5., 20.
+        self.solver.T_cold, self.solver.T_hot = 3., 2.
 
         expected_u = [[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,],[3., 3., 3., 3., 3.,]]
 
-        actual_u = solver.set_initial_condition()
+        actual_u = self.solver.set_initial_condition()
 
-        assert (expected_u == actual_u).all()
+        self.assertTrue(np.array_equal(expected_u, actual_u))
