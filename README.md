@@ -177,6 +177,115 @@ FAILED (failures=1)
 
 ```
 
+### Integration tests log
+
+```code
+
+===================================================== test session starts ======================================================
+platform darwin -- Python 3.11.1, pytest-7.2.1, pluggy-1.0.0
+rootdir: /Users/jay/Downloads/testing-python-exercise-wt2223
+collected 2 items                                                                                                              
+
+tests/integration/test_diffusion2d.py FF                                                                                 [100%]
+
+=========================================================== FAILURES ===========================================================
+_____________________________________________ test_initialize_physical_parameters ______________________________________________
+
+    def test_initialize_physical_parameters():
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=20.,h=15.,dx=2., dy=3.)
+        solver.initialize_physical_parameters(d=3.,T_cold=350.,T_hot=650.)
+>       assert solver.dt== 0.46153846153846156
+E       assert 0.75 == 0.46153846153846156
+E        +  where 0.75 = <diffusion2d.SolveDiffusion2D object at 0x110c0c9d0>.dt
+
+tests/integration/test_diffusion2d.py:15: AssertionError
+----------------------------------------------------- Captured stdout call -----------------------------------------------------
+dt = 0.75
+__________________________________________________ test_set_initial_condition __________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=20.,h=15.,dx=2., dy=3.)
+        solver.initialize_physical_parameters(d=3.,T_cold=300.,T_hot=700.)
+        test_op = [[300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 700., 300., 300.],
+                        [300., 300., 700., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.]]
+        generated_op = solver.set_initial_condition()
+>       assert (test_op == generated_op).all()
+E       assert False
+E        +  where False = <built-in method all of numpy.ndarray object at 0x110cd41b0>()
+E        +    where <built-in method all of numpy.ndarray object at 0x110cd41b0> = [[300.0, 300...., 300.0], ...] == array([[300.,... 300., 300.]])
+E             Use -v to get more diff.all
+
+tests/integration/test_diffusion2d.py:35: AssertionError
+----------------------------------------------------- Captured stdout call -----------------------------------------------------
+dt = 0.75
+=================================================== short test summary info ====================================================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - assert 0.75 == 0.46153846153846156
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - assert False
+====================================================== 2 failed in 1.00s =======================================================
+
+```
+
+```code
+
+===================================================== test session starts ======================================================
+platform darwin -- Python 3.11.1, pytest-7.2.1, pluggy-1.0.0
+rootdir: /Users/jay/Downloads/testing-python-exercise-wt2223
+collected 2 items                                                                                                              
+
+tests/integration/test_diffusion2d.py .F                                                                                 [100%]
+
+=========================================================== FAILURES ===========================================================
+__________________________________________________ test_set_initial_condition __________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+        solver.initialize_domain(w=20.,h=15.,dx=2., dy=3.)
+        solver.initialize_physical_parameters(d=3.,T_cold=300.,T_hot=700.)
+        test_op = [[300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 700., 300., 300.],
+                        [300., 300., 700., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.],
+                        [300., 300., 300., 300., 300.]]
+        generated_op = solver.set_initial_condition()
+>       assert (test_op == generated_op).all()
+E       assert False
+E        +  where False = <built-in method all of numpy.ndarray object at 0x114d8b870>()
+E        +    where <built-in method all of numpy.ndarray object at 0x114d8b870> = [[300.0, 300...., 300.0], ...] == array([[300.,... 300., 300.]])
+E             Use -v to get more diff.all
+
+tests/integration/test_diffusion2d.py:35: AssertionError
+----------------------------------------------------- Captured stdout call -----------------------------------------------------
+dt = 0.46153846153846156
+=================================================== short test summary info ====================================================
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - assert False
+================================================= 1 failed, 1 passed in 0.79s ==================================================
+
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
