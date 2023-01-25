@@ -82,6 +82,53 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - As
 
 ### unittest log
 
+```
+Fdt = 0.00031250000000000006
+FF
+======================================================================
+FAIL: test_initialize_domain (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Check function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/yasser/D24622B1462295EF/CS/Stuttgart/Simulation Software Engineering/exercise week9/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 19, in test_initialize_domain
+    self.assertEqual(self.solver.nx, 10000 )
+AssertionError: 1000 != 10000
+
+======================================================================
+FAIL: test_initialize_physical_parameters (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Checks function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/yasser/D24622B1462295EF/CS/Stuttgart/Simulation Software Engineering/exercise week9/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 30, in test_initialize_physical_parameters
+    self.assertAlmostEqual(self.solver.dt, 0.003125)
+AssertionError: 0.00031250000000000006 != 0.003125 within 7 places (0.0028125 difference)
+
+======================================================================
+FAIL: test_set_initial_condition (tests.unit.test_diffusion2d_functions.TestDiffusion2D)
+Checks function SolveDiffusion2D.get_initial_function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/yasser/D24622B1462295EF/CS/Stuttgart/Simulation Software Engineering/exercise week9/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 44, in test_set_initial_condition
+    self.assertEqual(u.shape, (self.solver.T_cold, self.solver.ny))
+AssertionError: Tuples differ: (100, 100) != (300, 100)
+
+First differing element 0:
+100
+300
+
+- (100, 100)
+?  ^
+
++ (300, 100)
+?  ^
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.005s
+
+FAILED (failures=3)
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
