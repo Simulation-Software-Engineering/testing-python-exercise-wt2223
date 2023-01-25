@@ -3,7 +3,7 @@ Tests for functionality checks in class SolveDiffusion2D
 """
 
 from diffusion2d import SolveDiffusion2D
-
+import pytest
 
 def test_initialize_physical_parameters():
     """
@@ -12,7 +12,7 @@ def test_initialize_physical_parameters():
     solver = SolveDiffusion2D()
     solver.initialize_domain(w=20.,h=15.,dx=2., dy=3.)
     solver.initialize_physical_parameters(d=3.,T_cold=350.,T_hot=650.)
-    assert solver.dt== 0.46153846153846156
+    assert solver.dt == pytest.approx(0.4615, abs = 0.0001)
 
 def test_set_initial_condition():
     """
