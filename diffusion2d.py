@@ -38,6 +38,11 @@ class SolveDiffusion2D:
         self.dt = None
 
     def initialize_domain(self, w=10., h=10., dx=0.1, dy=0.1):
+        assert type(w) == float
+        assert type(h) == float
+        assert type(dx) == float
+        assert type(dy) == float
+        
         self.w = w
         self.h = h
         self.dx = dx
@@ -45,7 +50,12 @@ class SolveDiffusion2D:
         self.nx = int(w / dx)
         self.ny = int(h / dy)
 
-    def initialize_physical_parameters(self, d=4., T_cold=300, T_hot=700):
+    def initialize_physical_parameters(self, d=4., T_cold=300., T_hot=700.):
+        
+        assert type(d) == float
+        assert type(T_cold) == float
+        assert type(T_hot) == float
+        
         self.D = d
         self.T_cold = T_cold
         self.T_hot = T_hot
@@ -58,7 +68,6 @@ class SolveDiffusion2D:
 
     def set_initial_condition(self):
         u = self.T_cold * np.ones((self.nx, self.ny))
-
         # Initial conditions - circle of radius r centred at (cx,cy) (mm)
         r, cx, cy = 2, 5, 5
         r2 = r ** 2
@@ -67,7 +76,7 @@ class SolveDiffusion2D:
                 p2 = (i * self.dx - cx) ** 2 + (j * self.dy - cy) ** 2
                 if p2 < r2:
                     u[i, j] = self.T_hot
-
+                    
         return u.copy()
 
     def do_timestep(self, u_nm1):
@@ -80,7 +89,6 @@ class SolveDiffusion2D:
         u[1:-1, 1:-1] = u_nm1[1:-1, 1:-1] + self.D * self.dt * (
                 (u_nm1[2:, 1:-1] - 2 * u_nm1[1:-1, 1:-1] + u_nm1[:-2, 1:-1]) / dx2
                 + (u_nm1[1:-1, 2:] - 2 * u_nm1[1:-1, 1:-1] + u_nm1[1:-1, :-2]) / dy2)
-
         return u.copy()
 
     def create_figure(self, fig, u, n, fignum):
