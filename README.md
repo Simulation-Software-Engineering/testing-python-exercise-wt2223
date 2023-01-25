@@ -95,21 +95,23 @@ __________________________________________________ test_set_initial_condition __
         solver.nx = 5
         solver.ny = 5
         solver.dx = 2.
-        solver.dy = 2.
-        test_op = [[300., 300., 300., 300., 300.], [300., 300., 300., 300., 300.],
-                    [300., 300., 700., 700., 300.], [300., 300., 700., 700., 300.],
+        solver.dy = 3.
+        test_op = [[300., 300., 300., 300., 300.],
+                    [300., 300., 300., 300., 300.],
+                    [300., 300., 700., 300., 300.],
+                    [300., 300., 700., 300., 300.],
                     [300., 300., 300., 300., 300.]]
         main_op = solver.set_initial_condition()
 >       assert (main_op == test_op).all()
 E       assert False
-E        +  where False = <built-in method all of numpy.ndarray object at 0x11115ba50>()
-E        +    where <built-in method all of numpy.ndarray object at 0x11115ba50> = array([[300.,... 300., 300.]]) == [[300.0, 300....300.0, 300.0]]
+E        +  where False = <built-in method all of numpy.ndarray object at 0x1152579f0>()
+E        +    where <built-in method all of numpy.ndarray object at 0x1152579f0> = array([[300.,... 300., 300.]]) == [[300.0, 300....300.0, 300.0]]
 E             Use -v to get more diff.all
 
-tests/unit/test_diffusion2d_functions.py:47: AssertionError
+tests/unit/test_diffusion2d_functions.py:57: AssertionError
 =================================================== short test summary info ====================================================
 FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - assert False
-================================================= 1 failed, 2 passed in 1.31s ==================================================
+================================================= 1 failed, 2 passed in 1.12s ==================================================
 
 ```
 
