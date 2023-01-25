@@ -45,10 +45,19 @@ class SolveDiffusion2D:
         self.nx = int(w / dx)
         self.ny = int(h / dy)
 
-    def initialize_physical_parameters(self, d=4., T_cold=300, T_hot=700):
+        assert isinstance(self.w, float)
+        assert isinstance(self.h, float)
+        assert isinstance(self.dx, float)
+        assert isinstance(self.dy, float)
+
+    def initialize_physical_parameters(self, d=4., T_cold=300., T_hot=700.):
         self.D = d
         self.T_cold = T_cold
         self.T_hot = T_hot
+
+        assert isinstance(self.D, float)
+        assert isinstance(self.T_cold, float)
+        assert isinstance(self.T_hot, float)
 
         # Computing a stable time step
         dx2, dy2 = self.dx * self.dx, self.dy * self.dy
