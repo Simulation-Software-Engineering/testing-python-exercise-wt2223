@@ -117,6 +117,66 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - as
 
 ### unittest log
 
+```code
+
+Fdt = 0.13333333333333333
+..
+======================================================================
+FAIL: test_initialize_domain (tests.unit.test_diffusion2d_functions.TestDiffusion2D.test_initialize_domain)
+Check function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/jay/Downloads/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 28, in test_initialize_domain
+    self.assertEqual(self.solver.nx, nx)
+AssertionError: 7 != 10
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1)
+
+```
+
+```code
+
+.dt = 0.08333333333333333
+F.
+======================================================================
+FAIL: test_initialize_physical_parameters (tests.unit.test_diffusion2d_functions.TestDiffusion2D.test_initialize_physical_parameters)
+Checks function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/jay/Downloads/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 43, in test_initialize_physical_parameters
+    self.assertEqual(self.solver.dt, dt)
+AssertionError: 0.08333333333333333 != 0.1333 ± 1.0e-04
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.056s
+
+FAILED (failures=1)
+
+```
+
+```code
+
+.dt = 0.13333333333333333
+.F
+======================================================================
+FAIL: test_set_initial_condition (tests.unit.test_diffusion2d_functions.TestDiffusion2D.test_set_initial_condition)
+Checks function SolveDiffusion2D.get_initial_function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/jay/Downloads/testing-python-exercise-wt2223/tests/unit/test_diffusion2d_functions.py", line 59, in test_set_initial_condition
+    self.assertTrue(np.array_equal(test_op, main_op))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=1)
+
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
