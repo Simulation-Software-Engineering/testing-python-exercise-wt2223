@@ -80,8 +80,8 @@ class SolveDiffusion2D:
 
         # Propagate with forward-difference in time, central-difference in space
         u[1:-1, 1:-1] = u_nm1[1:-1, 1:-1] + self.D * self.dt * (
-                (u_nm1[2:, 1:-1] - 2 * u_nm1[1:-1, 1:-1] + u_nm1[:-2, 1:-1]) / dx2
-                + (u_nm1[1:-1, 2:] - 2 * u_nm1[1:-1, 1:-1] + u_nm1[1:-1, :-2]) / dy2)
+                (u_nm1[2:, 1:-1] - 2 * u_nm1[1:-1, 1:-1] + u_nm1[:-2, 1:-1]) / dx2 + (
+                    u_nm1[1:-1, 2:] - 2 * u_nm1[1:-1, 1:-1] + u_nm1[1:-1, :-2]) / dy2)
 
         return u.copy()
 
