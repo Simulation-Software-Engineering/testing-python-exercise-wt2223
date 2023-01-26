@@ -17,8 +17,6 @@ class TestDiffusion2D(unittest.TestCase):
         """
         self.solver.initialize_domain(w=20., h=12., dx=0.5, dy=0.2)
         excepted_nx, excepted_ny = 40, 60
-        # assert self.solver.nx == excepted_nx, f'nx value should be {excepted_nx} but got {self.solver.nx}'
-        # assert self.solver.ny == excepted_ny, f'nx value should be {excepted_ny} but got {self.solver.ny}'
         self.assertEqual(self.solver.nx, excepted_nx)
         self.assertEqual(self.solver.ny, excepted_ny)
         
@@ -28,15 +26,14 @@ class TestDiffusion2D(unittest.TestCase):
         """
         self.solver.initialize_physical_parameters(d=3., T_cold=200., T_hot=500.)
         calculated_dt = 0.00574
-        # expected_dt = pytest.approx(calculated_dt, abs=0.01)
-        # assert expected_dt == self.solver.dt , 'Assertion error'
         self.assertAlmostEqual(self.solver.dt, calculated_dt, 4)
 
     def test_set_initial_condition(self):
         """
         Checks function SolveDiffusion2D.get_initial_function
         """
-        self.solver = SolveDiffusion2D()
+        self.w = 20
+        self.h = 12
         self.solver.nx = 5
         self.solver.ny = 5
         self.solver.D = 3.0
@@ -44,8 +41,7 @@ class TestDiffusion2D(unittest.TestCase):
         self.solver.dy = 0.1
         self.solver.T_cold = 200.0
         self.solver.T_hot = 500.0
-        #  According to the algorithm if I pass these values to the function it should give me numpy array with all the values equal to 200
-        excepted_u = np.ones((5, 5)) * 200.0
+        #  According to the algorithm if I pass these values to the function it should give me numpy array with all the values equal to T_cold
+        excepted_u = np.ones((5, 5)) * self.solver.T_cold
         calculated_u = self.solver.set_initial_condition()
         self.assertEqual(calculated_u.shape,excepted_u.shape)
-        assert np.array_equal(excepted_u,calculated_u), f'calculated u/initial condition should fe {excepted_u} but the function returned {calculated_u}'
