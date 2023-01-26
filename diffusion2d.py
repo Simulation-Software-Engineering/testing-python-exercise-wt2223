@@ -44,8 +44,13 @@ class SolveDiffusion2D:
         self.dy = dy
         self.nx = int(w / dx)
         self.ny = int(h / dy)
-
-    def initialize_physical_parameters(self, d=4., T_cold=300, T_hot=700):
+        
+        assert type(self.w) == float
+        assert type(self.h) == float
+        assert type(self.dx) == float
+        assert type(self.dy) == float
+        
+    def initialize_physical_parameters(self, d=4., T_cold=300., T_hot=700.):
         self.D = d
         self.T_cold = T_cold
         self.T_hot = T_hot
@@ -55,6 +60,10 @@ class SolveDiffusion2D:
         self.dt = dx2 * dy2 / (2 * self.D * (dx2 + dy2))
 
         print("dt = {}".format(self.dt))
+        
+        assert type(self.D) == float
+        assert type(self.T_cold) == float
+        assert type(self.T_hot) == float
 
     def set_initial_condition(self):
         u = self.T_cold * np.ones((self.nx, self.ny))
