@@ -1,6 +1,8 @@
 """
 Tests for functionality checks in class SolveDiffusion2D
 """
+import random
+import sys
 
 from diffusion2d import SolveDiffusion2D
 import pytest
@@ -23,10 +25,27 @@ def test_set_initial_condition():
     """
     Checks function SolveDiffusion2D.get_initial_function
     """
+
+    T_hot = float(random.randint(0, 1000))
+    T_cold = float(random.randrange(T_hot))
+
     solver = SolveDiffusion2D()
-    solver.initialize_domain(100., 100., 0.1, .1)
-    solver.initialize_physical_parameters(4., 1., 1.)
+    size = float(100)
+    resolution = float(.1)
+    solver.initialize_domain(size, size, resolution, resolution)
+
+    solver.initialize_physical_parameters(4., T_cold, T_hot)
 
     actual_u = solver.set_initial_condition()
-    expected_u = np.ones((1000, 1000))
-    assert np.array_equal(expected_u, actual_u)
+
+    assert np.max(actual_u) == T_hot
+    assert np.min(actual_u) == T_cold
+
+    hot_or_cold = np.bitwise_or(actual_u == T_hot, actual_u == T_cold)
+    assert np.all(hot_or_cold)
+
+    # check if the corners are cold
+    assert actual_u[0, 0] == T_cold
+    assert actual_u[0, -1] == T_cold
+    assert actual_u[-1, 0] == T_cold
+    assert actual_u[-1, -1] == T_cold
