@@ -9,10 +9,8 @@ import unittest
 
 class TestDiffusion2D(unittest.TestCase):
 
-    def setUp(self) -> None:
+    def setUp(self):
         self.solver = SolveDiffusion2D()
-
-        return super().setUp()
 
     def test_initialize_domain(self):
         """
